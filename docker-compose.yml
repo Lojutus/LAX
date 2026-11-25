@@ -1,0 +1,12 @@
+
+services:
+  lax:
+    build: .
+    container_name: lax
+    volumes:
+      - .:/app
+      - lax_node_modules:/app/node_modules
+    command: pnpm dev
+
+volumes:
+  lax_node_modules:

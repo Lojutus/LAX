@@ -1,0 +1,520 @@
+{
+  "assignments": [
+    {
+      "id": 306371,
+      "cmid": 2779184,
+      "course": 108422,
+      "name": "Subir Q # 4",
+      "nosubmissions": 0,
+      "submissiondrafts": 0,
+      "sendnotifications": 0,
+      "sendlatenotifications": 0,
+      "sendstudentnotifications": 1,
+      "duedate": 1795625700,
+      "allowsubmissionsfromdate": 1795618800,
+      "grade": 5,
+      "timemodified": 1795625192,
+      "completionsubmit": 0,
+      "cutoffdate": 1795625700,
+      "gradingduedate": 0,
+      "teamsubmission": 0,
+      "requireallteammemberssubmit": 0,
+      "teamsubmissiongroupingid": 0,
+      "blindmarking": 0,
+      "hidegrader": 0,
+      "revealidentities": 0,
+      "attemptreopenmethod": "untilpass",
+      "maxattempts": 1,
+      "markingworkflow": 0,
+      "markingallocation": 0,
+      "markinganonymous": 0,
+      "requiresubmissionstatement": 0,
+      "preventsubmissionnotingroup": 0,
+      "configs": [
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxfilesubmissions",
+          "value": "20"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxsubmissionsizebytes",
+          "value": "10485760"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "filetypeslist",
+          "value": "audio,html_audio,web_audio,.pdf,archive,spreadsheet,image,optimised_image,presentation,html_track,video,html_video,web_video,web_file,web_image,media_source"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "editpdf",
+          "subtype": "assignfeedback",
+          "name": "enabled",
+          "value": "1"
+        }
+      ],
+      "intro": "",
+      "introformat": 1,
+      "introfiles": [],
+      "introattachments": [],
+      "timelimit": 0,
+      "submissionattachments": 0,
+      "status": "pending",
+      "movedCalendarEventIds": []
+    },
+    {
+      "id": 306083,
+      "cmid": 2777843,
+      "course": 108433,
+      "name": "Entrega Hito 4",
+      "nosubmissions": 0,
+      "submissiondrafts": 0,
+      "sendnotifications": 0,
+      "sendlatenotifications": 0,
+      "sendstudentnotifications": 1,
+      "duedate": 1795906800,
+      "allowsubmissionsfromdate": 1795453200,
+      "grade": 5,
+      "timemodified": 1795532957,
+      "completionsubmit": 0,
+      "cutoffdate": 0,
+      "gradingduedate": 1796619600,
+      "teamsubmission": 0,
+      "requireallteammemberssubmit": 0,
+      "teamsubmissiongroupingid": 0,
+      "blindmarking": 0,
+      "hidegrader": 0,
+      "revealidentities": 0,
+      "attemptreopenmethod": "untilpass",
+      "maxattempts": 1,
+      "markingworkflow": 0,
+      "markingallocation": 0,
+      "markinganonymous": 0,
+      "requiresubmissionstatement": 0,
+      "preventsubmissionnotingroup": 0,
+      "configs": [
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "filetypeslist",
+          "value": "*"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxfilesubmissions",
+          "value": "20"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxsubmissionsizebytes",
+          "value": "10485760"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "editpdf",
+          "subtype": "assignfeedback",
+          "name": "enabled",
+          "value": "1"
+        }
+      ],
+      "intro": "<p>Entrega del hito 4. Commit en Github antes de que se cierre la actividad. </p>\r\n<p><strong>Adjuntar documento .txt con los integrantes que participaron en la entrega y un link al proyecto de github</strong></p>",
+      "introformat": 1,
+      "introfiles": [],
+      "introattachments": [],
+      "timelimit": 0,
+      "submissionattachments": 0,
+      "status": "scheduled",
+      "movedCalendarEventIds": [],
+      "calendarEventId": "a02c423c65028bf57727d4f499de81f6"
+    },
+    {
+      "id": 305253,
+      "cmid": 2773694,
+      "course": 109206,
+      "name": "EXPOSICIONES FINALES",
+      "nosubmissions": 0,
+      "submissiondrafts": 0,
+      "sendnotifications": 0,
+      "sendlatenotifications": 0,
+      "sendstudentnotifications": 1,
+      "duedate": 1796061600,
+      "allowsubmissionsfromdate": 1794978000,
+      "grade": 5,
+      "timemodified": 1795020156,
+      "completionsubmit": 0,
+      "cutoffdate": 1796065200,
+      "gradingduedate": 1796187600,
+      "teamsubmission": 0,
+      "requireallteammemberssubmit": 0,
+      "teamsubmissiongroupingid": 0,
+      "blindmarking": 0,
+      "hidegrader": 0,
+      "revealidentities": 0,
+      "attemptreopenmethod": "untilpass",
+      "maxattempts": 1,
+      "markingworkflow": 0,
+      "markingallocation": 0,
+      "markinganonymous": 0,
+      "requiresubmissionstatement": 0,
+      "preventsubmissionnotingroup": 0,
+      "configs": [
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxfilesubmissions",
+          "value": "2"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxsubmissionsizebytes",
+          "value": "10485760"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "filetypeslist",
+          "value": "audio,html_audio,web_audio,.pdf,archive,spreadsheet,image,optimised_image,presentation,html_track,video,html_video,web_video,web_file,web_image,media_source"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignfeedback",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignfeedback",
+          "name": "commentinline",
+          "value": "0"
+        },
+        {
+          "plugin": "editpdf",
+          "subtype": "assignfeedback",
+          "name": "enabled",
+          "value": "1"
+        }
+      ],
+      "intro": "<p>En este apartado deberán subir las exposiciones finales, todas deben estar listas para la fecha indicada, no se permitirá la realización de la exposición si no se tiene al menos una asesoría antes de la fecha en que le corresponda realizarla, no se realizarán asesorías dos días hábiles antes de la exposición, así mismo se recuerda que el porcentaje equivalente de la nota de estas se encuentra en el plan de trabajo, así como también encontrarán allí bibliografía de apoyo para cada una.</p>\r\n<p>Este es un ejercicio académico, por lo tanto todas serán revisadas para analizar el manejo de IA, porcentajes por encima del 25% no son permitidos. </p>\r\n<p>encontraran enlaces o texto de apoyo, el orden de las exposiciones es el que se encuentra en el plan de trabajo, las exposiciones cuyos temas no aparecen allí, van al final.</p>\r\n<p>Deben subir la exposición o el link de la misma, estos deben ser abiertos para podetr hacer la revisión de las presentaciones, los items a calificar incluyen:</p>\r\n<ol>\r\n<li>Dominio del tema, orden y coherencia en la presentación.</li>\r\n<li>Presentación, incluye citas, fotos, diagramas, tablas, gráficas, ejemplos de buena calidad.</li>\r\n<li>expresión oral.</li>\r\n<li>trabajo en equipo, el cual se evidencia porque todos los miembros del grupo deben revisar y conocer el tema.</li>\r\n<li>Deben estar atentos a las exposiciones, aleatoriamente se pregunta o se realiza quizz al grupo, las preguntas no son de selección múltiples ni falso y verdadero. Deben ceñirse a los 40 minutos para cada exposición, una vez finalizado el tiempo se corta la misma, sino se ha finalizado, la situación repercute sobre la calificación de todo el grupo de exposición.</li>\r\n<li>S e anexan textos que pueden ser de apoyo para las exposiciones, no obstante es importante realizar las búsquedas de información que complementen.</li>\r\n<li>Una vez cerrada la plataforma no se reciben presentaciones ni soportes si los hay, no acepto envios por correo electronico ni grupo de whatsapp.</li>\r\n</ol>",
+      "introformat": 1,
+      "introfiles": [],
+      "introattachments": [
+        {
+          "filename": "2026-08-26-anla-herramienta-eia-2026.pdf",
+          "filepath": "/",
+          "filesize": 1885462,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5373960/mod_assign/introattachment/0/2026-08-26-anla-herramienta-eia-2026.pdf",
+          "timemodified": 1795018474,
+          "mimetype": "application/pdf",
+          "isexternalfile": false,
+          "icon": "f/pdf"
+        },
+        {
+          "filename": "MANUAL DE EVALUACIÓN DE ESTUDIOS AMBIENTALES 2002.pdf",
+          "filepath": "/",
+          "filesize": 4658846,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5373960/mod_assign/introattachment/0/MANUAL%20DE%20EVALUACI%C3%93N%20DE%20ESTUDIOS%20AMBIENTALES%202002.pdf",
+          "timemodified": 1795018474,
+          "mimetype": "application/pdf",
+          "isexternalfile": false,
+          "icon": "f/pdf"
+        },
+        {
+          "filename": "manual-de-licencias-ambientales-en-colombia 2.pdf",
+          "filepath": "/",
+          "filesize": 5157292,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5373960/mod_assign/introattachment/0/manual-de-licencias-ambientales-en-colombia%202.pdf",
+          "timemodified": 1795018474,
+          "mimetype": "application/pdf",
+          "isexternalfile": false,
+          "icon": "f/pdf"
+        },
+        {
+          "filename": "manual_de_licencias_ambientales_en_colombia.pdf",
+          "filepath": "/",
+          "filesize": 637816,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5373960/mod_assign/introattachment/0/manual_de_licencias_ambientales_en_colombia.pdf",
+          "timemodified": 1795018474,
+          "mimetype": "application/pdf",
+          "isexternalfile": false,
+          "icon": "f/pdf"
+        },
+        {
+          "filename": "metodologia_estudios_ambientales_ANLA.pdf",
+          "filepath": "/",
+          "filesize": 2486388,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5373960/mod_assign/introattachment/0/metodologia_estudios_ambientales_ANLA.pdf",
+          "timemodified": 1795018474,
+          "mimetype": "application/pdf",
+          "isexternalfile": false,
+          "icon": "f/pdf"
+        }
+      ],
+      "timelimit": 0,
+      "submissionattachments": 0,
+      "status": "scheduled",
+      "movedCalendarEventIds": [],
+      "calendarEventId": "7f103aae2c586dde432c912273e6d696"
+    },
+    {
+      "id": 305257,
+      "cmid": 2773730,
+      "course": 109206,
+      "name": "ARTICULOS Y PRESENTACIONES FINALES",
+      "nosubmissions": 0,
+      "submissiondrafts": 0,
+      "sendnotifications": 0,
+      "sendlatenotifications": 0,
+      "sendstudentnotifications": 1,
+      "duedate": 1796666400,
+      "allowsubmissionsfromdate": 1794978000,
+      "grade": 5,
+      "timemodified": 1795020195,
+      "completionsubmit": 0,
+      "cutoffdate": 1796670000,
+      "gradingduedate": 1796706000,
+      "teamsubmission": 0,
+      "requireallteammemberssubmit": 0,
+      "teamsubmissiongroupingid": 0,
+      "blindmarking": 0,
+      "hidegrader": 0,
+      "revealidentities": 0,
+      "attemptreopenmethod": "untilpass",
+      "maxattempts": 1,
+      "markingworkflow": 0,
+      "markingallocation": 0,
+      "markinganonymous": 0,
+      "requiresubmissionstatement": 0,
+      "preventsubmissionnotingroup": 0,
+      "configs": [
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxfilesubmissions",
+          "value": "2"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxsubmissionsizebytes",
+          "value": "10485760"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "filetypeslist",
+          "value": "audio,html_audio,web_audio,.pdf,archive,spreadsheet,image,optimised_image,presentation,html_track,video,html_video,web_video,web_file,web_image,media_source"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignfeedback",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignfeedback",
+          "name": "commentinline",
+          "value": "0"
+        },
+        {
+          "plugin": "editpdf",
+          "subtype": "assignfeedback",
+          "name": "enabled",
+          "value": "1"
+        }
+      ],
+      "intro": "<p>En este apartado pueden subir los artículos y presentaciones que realicen de apoyo para la presentación del trabajo final.</p>\r\n<p>El porcentaje de la nota esta en el documento de plan de trabajo de la asignatura.</p>\r\n<p>Las presentaciones deben tener una duración de 10 minutos, debe resaltar cada aspecto encontrado en el tema asignado.</p>\r\n<p>Como ejercicio académico se busca desarrollar la capacidad de síntesis y el trabajo en equipo, debido al tiempo se asignara la presentación a una sola persona del equipo de trabajo, quien tendrá la responsabilidad de mostrar los resultados, la persona se escogerá de manera aleatoria el día de la presentación. Todos los trabajos deben subirse a la plataforma antes del cierre de la misma, no se recibirán trabajos por correo electrónico. </p>\r\n<p>Los items a evaluar es dominio del tema, cumplimiento del tiempo de presentación, análisis realizado.</p>\r\n<p>Ningún trabajo podrá presentarse si al menos no ha realizado una asesoría para el mismo las asesorías finalizan una semana antes de la fecha de entrega establecida en el campus.</p>",
+      "introformat": 1,
+      "introfiles": [],
+      "introattachments": [],
+      "timelimit": 0,
+      "submissionattachments": 0,
+      "status": "scheduled",
+      "movedCalendarEventIds": [],
+      "calendarEventId": "fd4e31a708b1c152a09aecf2b1516b0b"
+    },
+    {
+      "id": 291518,
+      "cmid": 2683350,
+      "course": 108767,
+      "name": "Entrega del proyecto",
+      "nosubmissions": 0,
+      "submissiondrafts": 0,
+      "sendnotifications": 1,
+      "sendlatenotifications": 0,
+      "sendstudentnotifications": 0,
+      "duedate": 1796965140,
+      "allowsubmissionsfromdate": 1794805200,
+      "grade": 5,
+      "timemodified": 1794791040,
+      "completionsubmit": 0,
+      "cutoffdate": 0,
+      "gradingduedate": 0,
+      "teamsubmission": 1,
+      "requireallteammemberssubmit": 0,
+      "teamsubmissiongroupingid": 6081,
+      "blindmarking": 0,
+      "hidegrader": 0,
+      "revealidentities": 0,
+      "attemptreopenmethod": "untilpass",
+      "maxattempts": 1,
+      "markingworkflow": 1,
+      "markingallocation": 1,
+      "markinganonymous": 0,
+      "requiresubmissionstatement": 0,
+      "preventsubmissionnotingroup": 1,
+      "configs": [
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "filetypeslist",
+          "value": ""
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxsubmissionsizebytes",
+          "value": "10485760"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignsubmission",
+          "name": "maxfilesubmissions",
+          "value": "1"
+        },
+        {
+          "plugin": "comments",
+          "subtype": "assignsubmission",
+          "name": "enabled",
+          "value": "1"
+        },
+        {
+          "plugin": "file",
+          "subtype": "assignfeedback",
+          "name": "enabled",
+          "value": "1"
+        }
+      ],
+      "intro": "<p dir=\"ltr\" style=\"text-align: left;\"></p><p><strong>Actividad para organizar la entrega y la calificación del proyecto.</strong></p><p>Debe entregar un informe en formato pdf,&nbsp; los tres paquetes solicitados (ReconstCadenas, ReconstCadenasPar y ArbolSufijos)<span style=\"font-size: 0.9375rem;\">, un archivo Readme.txt que describa todos los archivos&nbsp;</span><span style=\"font-size: 0.9375rem;\">entregados y las instrucciones para ejecutar la aplicació</span><span style=\"font-size: 0.9375rem;\">n.&nbsp;</span></p><p><span style=\"font-size: 0.9375rem;\"></span></p><p>Nosotros armaremos un proyecto constituido por sus tres paquetes y nuestros paquetes&nbsp;<span style=\"font-size: 0.9375rem;\">common y Oraculo que encuentran adjuntos acá. Y correremos nuestras pruebas, como en el worksheet adjunto.</span></p><p><span style=\"font-size: 0.9375rem;\">Su entrega se hace&nbsp; en un solo archivo empaquetado&nbsp;</span><span style=\"font-size: 0.9375rem;\">cuyo nombre contiene los apellidos de los autores y cuya&nbsp;</span><span style=\"font-size: 0.9375rem;\">extensión corresponde al modo de compresión.</span></p><p>La rúbrica con la que será evaluado cada proyecto se adjunta a esta actividad.</p><br><p></p>",
+      "introformat": 1,
+      "introfiles": [
+        {
+          "filename": "CriteriosRubrica.zip",
+          "filepath": "/",
+          "filesize": 2930139,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5267254/mod_assign/intro/CriteriosRubrica.zip",
+          "timemodified": 1788811432,
+          "mimetype": "application/zip",
+          "isexternalfile": false,
+          "icon": "f/archive"
+        }
+      ],
+      "introattachments": [
+        {
+          "filename": "Oraculo.zip",
+          "filepath": "/",
+          "filesize": 553,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5267254/mod_assign/introattachment/0/Oraculo.zip",
+          "timemodified": 1788309843,
+          "mimetype": "application/zip",
+          "isexternalfile": false,
+          "icon": "f/archive"
+        },
+        {
+          "filename": "Pruebas.sc",
+          "filepath": "/",
+          "filesize": 11551,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5267254/mod_assign/introattachment/0/Pruebas.sc",
+          "timemodified": 1788309843,
+          "mimetype": "text/plain",
+          "isexternalfile": false,
+          "icon": "f/text"
+        },
+        {
+          "filename": "Rubrica.zip",
+          "filepath": "/",
+          "filesize": 1604779,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5267254/mod_assign/introattachment/0/Rubrica.zip",
+          "timemodified": 1788811432,
+          "mimetype": "application/zip",
+          "isexternalfile": false,
+          "icon": "f/archive"
+        },
+        {
+          "filename": "common.zip",
+          "filepath": "/",
+          "filesize": 828,
+          "fileurl": "https://campusvirtual.univalle.edu.co/moodle/webservice/pluginfile.php/5267254/mod_assign/introattachment/0/common.zip",
+          "timemodified": 1788309843,
+          "mimetype": "application/zip",
+          "isexternalfile": false,
+          "icon": "f/archive"
+        }
+      ],
+      "timelimit": 0,
+      "submissionattachments": 0,
+      "status": "scheduled",
+      "movedCalendarEventIds": [],
+      "calendarEventId": "ebb50be166a78e0ed58e148837937d30"
+    }
+  ]
+}

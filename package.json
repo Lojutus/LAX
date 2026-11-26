@@ -1,0 +1,21 @@
+{
+  "name": "lax",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.24.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "fastify": "^5.12.8",
+    "googleapis": "^190.0.0",
+    "openai": "^7.64.0"
+  }
+}

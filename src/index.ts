@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import type { FastifyRequest, FastifyReply } from "fastify";
+import { createHash, timingSafeEqual } from "node:crypto";
 import { routeRequest } from "./modules/router";
 import type { IncomingEvent } from "./modules/planner";
 
@@ -10,12 +11,22 @@ const app = Fastify({
 async function authenticate(
     request: FastifyRequest,
     reply: FastifyReply
-) {
-    const apiKey = request.headers["x-lax-key"];
+): Promise<void | FastifyReply> {
+    const configuredKey = process.env.LAX_API_KEY;
+    const providedKey = request.headers["x-lax-key"];
+    const expected = configuredKey
+        ? createHash("sha256").update(configuredKey, "utf8").digest()
+        : undefined;
+    const actual = typeof providedKey === "string"
+        ? createHash("sha256").update(providedKey, "utf8").digest()
+        : undefined;
 
-    if (!process.env.LAX_API_KEY ||
-        apiKey !== process.env.LAX_API_KEY) {
-        reply.code(401).send({
+    if (
+        !expected ||
+        !actual ||
+        !timingSafeEqual(expected, actual)
+    ) {
+        return reply.code(401).send({
             success: false,
             message: "Unauthorized"
         });
@@ -44,8 +55,7 @@ app.get("/health", async (request, reply) => {
 });
 
 
-app.post("/events", async (request, reply) => {
-
+app.post("/events", { preHandler: authenticate }, async (request, reply) => {
     const event = request.body as IncomingEvent;
 
     return await routeRequest({
@@ -53,13 +63,17 @@ app.post("/events", async (request, reply) => {
         data: event
     });
 });
-app.post("/schedule", async (request, reply) => {
+app.post(
+    "/schedule",
+    { preHandler: authenticate },
+    async (request, reply) => {
     const body: unknown = request.body;
     if (typeof body !== "object" || body === null || Array.isArray(body)) {
         return reply.code(400).send({
             status: "invalid_request",
             message: 'El body debe ser un objeto JSON con el campo "text".'
-        });
+            }
+        );
     }
 
     const requestBody = body as Record<string, unknown>;

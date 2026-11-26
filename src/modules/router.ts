@@ -45,12 +45,15 @@ function toConversationResponse(result: CalendarRequestResult) {
             ? "Ese horario está ocupado; no pude completar el cambio."
             : detail.includes("no existe el evento")
                 ? "No encuentro ese evento. Indica su título y el día."
-                : detail.includes("no encontré un horario disponible") ||
+                : detail.includes("la hora solicitada ya pasó") ||
+                    detail.includes("la fecha límite ya pasó") ||
+                    detail.includes("no encontré un horario disponible") ||
                     detail.includes("no puedo reubicar de forma segura") ||
                     detail.includes("no puedo reubicar tantos compromisos") ||
                     detail.includes("no pude determinar la duración") ||
                     detail.includes("no pude completar la operación al") ||
-                    detail.includes("moví el compromiso, pero")
+                    detail.includes("moví el compromiso, pero") ||
+                    detail.includes("la serie semanal coincide")
                     ? result.message
                     : "No pude completar la operación. Revisa tu calendario e inténtalo de nuevo.";
         return {

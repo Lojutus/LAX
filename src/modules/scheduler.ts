@@ -7,6 +7,7 @@ const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID ?? "primary";
 
 export interface ScheduleEvent {
     id: string;
+    recurringEventId: string | null;
     title: string;
     description: string;
     start: string;
@@ -20,7 +21,32 @@ export interface ScheduleEvent {
 export interface CalendarEventInput {
     title: string;
     description: string;
+    recurrence?: CalendarRecurrence;
 }
+
+export type CalendarWeekday =
+    | "MO"
+    | "TU"
+    | "WE"
+    | "TH"
+    | "FR"
+    | "SA"
+    | "SU";
+
+export interface CalendarRecurrence {
+    frequency: "weekly";
+    dayOfWeek: CalendarWeekday;
+}
+
+const WEEKDAYS: CalendarWeekday[] = [
+    "SU",
+    "MO",
+    "TU",
+    "WE",
+    "TH",
+    "FR",
+    "SA"
+];
 
 function getCalendarClient() {
     const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -73,10 +99,146 @@ function getCalendarEventId(
     start: string,
     end: string
 ): string {
+    const identity = event.recurrence
+        ? [
+            event.title,
+            event.description,
+            start,
+            end,
+            event.recurrence.frequency,
+            event.recurrence.dayOfWeek
+        ]
+        : [event.title, event.description, start, end];
+
     return `l${createHash("sha256")
-        .update(JSON.stringify([event.title, event.description, start, end]))
+        .update(JSON.stringify(identity))
         .digest("hex")
         .slice(0, 32)}`;
+}
+
+function getLocalDateTimeParts(date: Date, timeZone: string) {
+    const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+    }).formatToParts(date);
+    const getPart = (type: string) =>
+        Number(parts.find(part => part.type === type)?.value);
+
+    return {
+        year: getPart("year"),
+        month: getPart("month"),
+        day: getPart("day"),
+        hour: getPart("hour"),
+        minute: getPart("minute"),
+        second: getPart("second")
+    };
+}
+
+function localDateTimeToDate(
+    year: number,
+    month: number,
+    day: number,
+    hour: number,
+    minute: number,
+    second: number,
+    timeZone: string
+): Date {
+    const targetAsUtc = Date.UTC(year, month - 1, day, hour, minute, second);
+    const formatter = new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+    });
+    let timestamp = targetAsUtc;
+
+    for (let attempt = 0; attempt < 4; attempt += 1) {
+        const parts = formatter.formatToParts(new Date(timestamp));
+        const getPart = (type: string) =>
+            Number(parts.find(part => part.type === type)?.value);
+        const renderedAsUtc = Date.UTC(
+            getPart("year"),
+            getPart("month") - 1,
+            getPart("day"),
+            getPart("hour"),
+            getPart("minute"),
+            getPart("second")
+        );
+        timestamp += targetAsUtc - renderedAsUtc;
+    }
+
+    const result = new Date(timestamp);
+    const actual = getLocalDateTimeParts(result, timeZone);
+    if (
+        actual.year !== year ||
+        actual.month !== month ||
+        actual.day !== day ||
+        actual.hour !== hour ||
+        actual.minute !== minute ||
+        actual.second !== second
+    ) {
+        throw new Error("No se pudo determinar una ocurrencia en la zona horaria del calendario.");
+    }
+
+    return result;
+}
+
+export function getWeeklyOccurrences(
+    start: string,
+    end: string,
+    recurrence: CalendarRecurrence
+): Array<{ start: string; end: string }> {
+    if (recurrence.frequency !== "weekly" || !WEEKDAYS.includes(recurrence.dayOfWeek)) {
+        throw new Error("La regla de repetición semanal no es válida.");
+    }
+
+    const startDate = new Date(start);
+    const localStart = getLocalDateTimeParts(startDate, TIMEZONE);
+    const weekday = WEEKDAYS[new Date(Date.UTC(
+        localStart.year,
+        localStart.month - 1,
+        localStart.day
+    )).getUTCDay()];
+
+    if (weekday !== recurrence.dayOfWeek) {
+        throw new Error("La fecha de inicio debe coincidir con el día de la repetición semanal.");
+    }
+
+    const occurrences: Array<{ start: string; end: string }> = [];
+    const durationMs = new Date(end).getTime() - startDate.getTime();
+
+    for (let week = 0; week < 52; week += 1) {
+        const occurrenceDate = new Date(Date.UTC(
+            localStart.year,
+            localStart.month - 1,
+            localStart.day + week * 7
+        ));
+        const occurrenceStart = localDateTimeToDate(
+            occurrenceDate.getUTCFullYear(),
+            occurrenceDate.getUTCMonth() + 1,
+            occurrenceDate.getUTCDate(),
+            localStart.hour,
+            localStart.minute,
+            localStart.second,
+            TIMEZONE
+        );
+        occurrences.push({
+            start: occurrenceStart.toISOString(),
+            end: new Date(occurrenceStart.getTime() + durationMs).toISOString()
+        });
+    }
+
+    return occurrences;
 }
 
 function cleanHtml(html: string): string {
@@ -138,7 +300,7 @@ async function listEvents(
             orderBy: "startTime",
             maxResults: 2500,
             pageToken,
-            fields: "items(id,summary,description,start,end,status,transparency,extendedProperties(private)),nextPageToken"
+            fields: "items(id,recurringEventId,summary,description,start,end,status,transparency,extendedProperties(private)),nextPageToken"
         });
 
         events.push(...(response.data.items ?? []));
@@ -168,6 +330,7 @@ function toScheduleEvent(event: calendar_v3.Schema$Event): ScheduleEvent {
 
     return {
         id: event.id,
+        recurringEventId: event.recurringEventId ?? null,
         title: event.summary ?? "",
         description: event.description ?? "",
         start: getEventDateTime(event.start, "inicio"),
@@ -297,9 +460,30 @@ export async function createCalendarEvent(
         throw new Error(`El evento determinista "${eventId}" está cancelado en Calendar.`);
     }
 
-    const events = await listEvents(calendar, range.startDateTime, range.endDateTime);
-    if (hasConflict(events, range.startDateTime, range.endDateTime)) {
-        throw new Error("El horario indicado no está disponible en Google Calendar.");
+    const recurrence = event.recurrence;
+    const occurrences = recurrence
+        ? getWeeklyOccurrences(
+            range.startDateTime,
+            range.endDateTime,
+            recurrence
+        )
+        : [{ start: range.startDateTime, end: range.endDateTime }];
+    const conflictRangeEnd = occurrences[occurrences.length - 1].end;
+    const events = await listEvents(
+        calendar,
+        range.startDateTime,
+        conflictRangeEnd
+    );
+    if (
+        occurrences.some(occurrence =>
+            hasConflict(events, occurrence.start, occurrence.end)
+        )
+    ) {
+        throw new Error(
+            recurrence
+                ? "La serie recurrente tiene conflictos durante las próximas 52 ocurrencias."
+                : "El horario indicado no está disponible en Google Calendar."
+        );
     }
 
     try {
@@ -322,7 +506,14 @@ export async function createCalendarEvent(
                 end: {
                     dateTime: range.endDateTime,
                     timeZone: TIMEZONE
-                }
+                },
+                ...(recurrence
+                    ? {
+                        recurrence: [
+                            `RRULE:FREQ=WEEKLY;BYDAY=${recurrence.dayOfWeek}`
+                        ]
+                    }
+                    : {})
             }
         });
     } catch (error) {

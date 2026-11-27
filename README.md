@@ -51,7 +51,7 @@ Requisito: Docker Desktop con Docker Compose.
    docker compose down
    ```
 
-   **Importante:** al iniciar el servidor se intenta sincronizar Moodle inmediatamente y luego según `MIN_REQUEST_INTERVAL`. La sincronización puede planificar actividades y crear eventos en el calendario.
+   **Importante:** al iniciar el servidor se intenta sincronizar Moodle inmediatamente y luego según `MIN_REQUEST_INTERVAL`. La sincronización puede planificar actividades y crear eventos en el calendario, debes de configurar un volumen para que no intente agendar cosas antiguas, en cada deploy.
 
 ## Peticiones HTTP
 

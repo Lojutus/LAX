@@ -1,0 +1,16 @@
+
+services:
+  lax:
+    build: .
+    container_name: lax
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - lax_node_modules:/app/node_modules
+    env_file:
+      - .env
+    command: pnpm dev
+
+volumes:
+  lax_node_modules:

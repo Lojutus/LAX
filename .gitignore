@@ -1,0 +1,5 @@
+.env
+.pnpm-store
+node_modules
+dist
+data

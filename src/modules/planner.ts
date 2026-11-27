@@ -639,6 +639,112 @@ function getTimeZoneOffsetMinutes(date: Date, timeZone: string): number {
     return Math.round((localAsUtc - date.getTime()) / 60_000);
 }
 
+<<<<<<< HEAD
+=======
+function getPlanningHorizonDate(now: Date): string {
+    const deadline = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: TIMEZONE,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+    }).formatToParts(deadline);
+    const getPart = (type: string) =>
+        parts.find(part => part.type === type)?.value ?? "";
+    const offset = getTimeZoneOffsetMinutes(deadline, TIMEZONE);
+    const sign = offset >= 0 ? "+" : "-";
+    const absoluteOffset = Math.abs(offset);
+
+    return (
+        `${getPart("year")}-${getPart("month")}-${getPart("day")}` +
+        `T${getPart("hour")}:${getPart("minute")}:${getPart("second")}` +
+        `${sign}${String(Math.floor(absoluteOffset / 60)).padStart(2, "0")}` +
+        `:${String(absoluteOffset % 60).padStart(2, "0")}`
+    );
+}
+
+function isUnscheduledTwoHourActivityRequest(text: string): boolean {
+    const normalized = normalizeEventSearchText(text);
+    const requestsScheduling =
+        /\b(?:agenda|agendame|agendar|programa|programame|schedule|book)\b/.test(normalized);
+    const specifiesTwoHours = getExplicitDurationMs(text) === STUDY_DURATION_MS;
+    const namesAnActivity =
+        /\b(?:actividad|tarea|sesion|bloque|estudiar|estudio|preparar|leer)\b/.test(normalized);
+    const includesTimeOrDate =
+        /\b(?:hoy|manana|pasado|lunes|martes|miercoles|jueves|viernes|sabado|domingo|enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre|a las|el dia|fecha|20\d{2})\b|\ba las?\s+\d{1,2}\b|\b\d{1,2}:\d{2}\b|\b\d{1,2}\s*(?:am|pm|a m|p m)\b/.test(normalized);
+
+    return (
+        requestsScheduling &&
+        specifiesTwoHours &&
+        namesAnActivity &&
+        !includesTimeOrDate
+    );
+}
+
+function getExplicitDurationMs(text: string): number | undefined {
+    const normalized = normalizeEventSearchText(text);
+    const numberValues: Record<string, number> = {
+        un: 1,
+        uno: 1,
+        una: 1,
+        dos: 2,
+        tres: 3,
+        cuatro: 4,
+        cinco: 5,
+        seis: 6,
+        siete: 7,
+        ocho: 8,
+        nueve: 9,
+        diez: 10
+    };
+    const parseQuantity = (value: string): number =>
+        numberValues[value] ?? Number(value.replace(",", "."));
+    const hoursMatch = normalized.match(
+        /\b(un|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|\d+(?:[.,]\d+)?)\s+horas?\b/
+    );
+    const minutesMatch = normalized.match(
+        /\b(un|uno|una|dos|tres|cuatro|cinco|seis|siete|ocho|nueve|diez|\d+(?:[.,]\d+)?)\s+minutos?\b/
+    );
+    let durationMs = 0;
+
+    if (hoursMatch) {
+        const hours = parseQuantity(hoursMatch[1]);
+        if (!Number.isFinite(hours) || hours <= 0) return undefined;
+        durationMs += hours * 60 * 60 * 1000;
+        if (/\bhoras?\s+y\s+media\b/.test(normalized)) {
+            durationMs += 30 * 60 * 1000;
+        }
+    } else if (/\bmedia\s+hora\b/.test(normalized)) {
+        durationMs += 30 * 60 * 1000;
+    }
+
+    if (minutesMatch) {
+        const minutes = parseQuantity(minutesMatch[1]);
+        if (!Number.isFinite(minutes) || minutes <= 0) return undefined;
+        durationMs += minutes * 60 * 1000;
+    }
+
+    return durationMs > 0 ? durationMs : undefined;
+}
+
+function formatDateTimeWithOffset(date: Date, offsetMinutes: number): string {
+    const localDate = new Date(date.getTime() + offsetMinutes * 60_000);
+    const pad = (value: number) => String(value).padStart(2, "0");
+    const absoluteOffset = Math.abs(offsetMinutes);
+    const sign = offsetMinutes >= 0 ? "+" : "-";
+
+    return (
+        `${localDate.getUTCFullYear()}-${pad(localDate.getUTCMonth() + 1)}-${pad(localDate.getUTCDate())}` +
+        `T${pad(localDate.getUTCHours())}:${pad(localDate.getUTCMinutes())}:${pad(localDate.getUTCSeconds())}` +
+        `${sign}${pad(Math.floor(absoluteOffset / 60))}:${pad(absoluteOffset % 60)}`
+    );
+}
+
+>>>>>>> master
 function includesExplicitTimezone(text: string): boolean {
     return (
         /\b(?:UTC|GMT)\b|[A-Za-z_]+\/[A-Za-z_]+|[+-]\d{2}:?\d{2}/i.test(text) ||
@@ -1149,9 +1255,17 @@ export async function extractIncomingEvent(
                     "Las tareas flexibles (estudiar, preparar, terminar, leer) tienen una fecha límite dueAt; no fijes su sesión de trabajo a la hora de entrega.",
                     "Los compromisos que ocurren a una hora concreta (reunión, clase, cita, ir a un lugar o bloquear tiempo) son fixed_time_event y deben conservar exactamente la hora pedida.",
                     "Si el usuario pide explícitamente agregar, agendar o bloquear una actividad para una hora de inicio concreta y da su duración o una hora de fin, clasifícala como fixed_time_event aunque sea una actividad académica. Usa flexible_task cuando la fecha/hora indicada sea solo una fecha límite y no se solicite un inicio fijo.",
+<<<<<<< HEAD
                     "Para fixed_time_event necesitas inicio y fin. Si solo se indicó la hora de inicio, pregunta la duración o la hora de finalización; no inventes una duración.",
                     "Si un evento fijo se repite semanalmente, extrae recurrenceFrequency=weekly y recurrenceDayOfWeek como MO, TU, WE, TH, FR, SA o SU. El inicio debe ser la próxima ocurrencia indicada. La serie se crea sin fecha final y LAX verificará conflictos en sus primeras 52 ocurrencias; no apliques recurrencia a tareas flexibles.",
                     "Si se pide una tarea sin fecha límite y sin horario explícito (por ejemplo estudiar cálculo el viernes), pregunta si el usuario tiene una hora en mente o quiere que busques un espacio.",
+=======
+                    "Para fixed_time_event necesitas inicio y fin. Si el usuario indicó una duración, calcula el fin sumándola al inicio y no pidas que lo confirme. Si indicó inicio sin fin ni duración, pide la duración.",
+                    "Si un evento fijo se repite semanalmente, extrae recurrenceFrequency=weekly y recurrenceDayOfWeek como MO, TU, WE, TH, FR, SA o SU. El inicio debe ser la próxima ocurrencia indicada. La serie se crea sin fecha final y LAX verificará conflictos en sus primeras 52 ocurrencias; no apliques recurrencia a tareas flexibles.",
+                    "Si el usuario pide agendar una tarea o actividad por exactamente dos horas sin fecha ni hora, clasifícala como flexible_task; consulta el calendario y busca un bloque libre dentro de los próximos siete días, sin pedirle que elija cuándo.",
+                    "Una solicitud que diga reunión, cita o clase con día, hora de inicio y duración es un fixed_time_event; calcula la hora final a partir de la duración indicada.",
+                    "Si se pide una tarea sin fecha límite pero con un día o una hora, trata el día/hora como preferencia para planificar cuando la petición sea buscar un espacio; pregunta solo si realmente no se puede determinar la intención o falta el título de un evento fijo.",
+>>>>>>> master
                     "Si falta información temporal esencial, no se puede resolver una fecha relativa sin inventar, o no está claro si es una fecha límite o un evento fijo, devuelve clarification_required con una pregunta concreta.",
                     `Interpreta fechas relativas usando la fecha local indicada y la zona ${TIMEZONE}. Si el usuario no indicó una zona horaria, usa ${TIMEZONE}; si indicó una zona, respétala.`,
                     "Todas las fechas de salida deben ser ISO 8601 con segundos y offset numérico explícito. Para flexible_task completa dueAt; para fixed_time_event completa startAt y endAt. Usa recurrenceFrequency=none y recurrenceDayOfWeek vacío cuando no se repita. Deja vacías las fechas que no correspondan.",
@@ -1257,7 +1371,11 @@ export async function extractIncomingEvent(
         throw new Error("OpenAI devolvió una extracción que no cumple el esquema esperado.");
     }
 
+<<<<<<< HEAD
     const extraction: IncomingEventExtractionPayload = {
+=======
+    let extraction: IncomingEventExtractionPayload = {
+>>>>>>> master
         status: value.status,
         eventKind: value.eventKind,
         timezoneBasis: value.timezoneBasis,
@@ -1271,6 +1389,41 @@ export async function extractIncomingEvent(
         clarification: value.clarification
     };
 
+<<<<<<< HEAD
+=======
+    const explicitDurationMs = getExplicitDurationMs(text);
+    const explicitStart = parseExplicitOffsetDate(extraction.startAt);
+    if (explicitDurationMs && explicitStart) {
+        const end = new Date(explicitStart.getTime() + explicitDurationMs);
+        const endOffset = extraction.timezoneBasis === "bogota_default"
+            ? getTimeZoneOffsetMinutes(end, TIMEZONE)
+            : extraction.timezoneBasis === "user_specified"
+                ? getUserSpecifiedOffsetMinutes(text, end)
+                : undefined;
+
+        if (endOffset !== undefined) {
+            extraction = {
+                ...extraction,
+                status: "ready",
+                eventKind: "fixed_time_event",
+                endAt: formatDateTimeWithOffset(end, endOffset)
+            };
+        }
+    }
+
+    if (isUnscheduledTwoHourActivityRequest(text)) {
+        return {
+            status: "ready",
+            event: {
+                kind: "flexible_task",
+                title: extraction.title.trim() || "Tarea",
+                description: extraction.description.trim() || text.trim(),
+                dueAt: getPlanningHorizonDate(now)
+            }
+        }
+    }
+
+>>>>>>> master
     const clarification =
         extraction.clarification.trim() ||
         "¿Cuál es la fecha y hora, y cuánto dura el compromiso o la tarea?";
@@ -1991,6 +2144,38 @@ function parseIntentDate(
     return date;
 }
 
+<<<<<<< HEAD
+=======
+function getLocalDayRange(date: Date): { start: Date; end: Date } {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: TIMEZONE,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit"
+    }).formatToParts(date);
+    const getPart = (type: string) =>
+        Number(parts.find(part => part.type === type)?.value);
+    const year = getPart("year");
+    const month = getPart("month");
+    const day = getPart("day");
+    const nextDay = new Date(Date.UTC(year, month - 1, day + 1));
+    const start = parseLocalDateInTimezone(
+        `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}T00:00:00`,
+        TIMEZONE
+    );
+    const end = parseLocalDateInTimezone(
+        `${nextDay.getUTCFullYear()}-${String(nextDay.getUTCMonth() + 1).padStart(2, "0")}-${String(nextDay.getUTCDate()).padStart(2, "0")}T00:00:00`,
+        TIMEZONE
+    );
+
+    if (!start || !end) {
+        throw new Error("No pude determinar el día local del evento.");
+    }
+
+    return { start, end };
+}
+
+>>>>>>> master
 function prepareCalendarOperationState(
     intent: CalendarIntentPayload,
     requestText: string,
@@ -2000,19 +2185,38 @@ function prepareCalendarOperationState(
         throw new Error("La operación no se puede ejecutar por este flujo.");
     }
 
+<<<<<<< HEAD
     const targetDateStart = parseIntentDate(
+=======
+    let targetDateStart = parseIntentDate(
+>>>>>>> master
         intent.targetDateStart,
         "La fecha del evento existente",
         intent.timezoneBasis,
         requestText
     );
+<<<<<<< HEAD
     const targetDateEnd = parseIntentDate(
+=======
+    let targetDateEnd = parseIntentDate(
+>>>>>>> master
         intent.targetDateEnd,
         "El fin del rango del evento existente",
         intent.timezoneBasis,
         requestText
     );
     if (Boolean(targetDateStart) !== Boolean(targetDateEnd)) {
+<<<<<<< HEAD
+=======
+        const singleTargetDate = targetDateStart ?? targetDateEnd;
+        if (singleTargetDate) {
+            const dayRange = getLocalDayRange(singleTargetDate);
+            targetDateStart = dayRange.start;
+            targetDateEnd = dayRange.end;
+        }
+    }
+    if (Boolean(targetDateStart) !== Boolean(targetDateEnd)) {
+>>>>>>> master
         return {
             status: "needs_clarification",
             question: "Indica el día completo del evento que quieres identificar."

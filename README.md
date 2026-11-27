@@ -75,6 +75,11 @@ Este endpoint requiere el encabezado `x-lax-key` con el mismo valor de `LAX_API_
 
 Este endpoint interpreta consultas, creaciones, movimientos y otras solicitudes del calendario. Las fechas sin zona explícita se interpretan con `America/Bogota`. Si falta información, responde con una pregunta.
 
+<<<<<<< HEAD
+=======
+Si una operación necesita confirmación (por ejemplo, eliminar un evento o mover un compromiso en conflicto), `/schedule` responde HTTP `409 Conflict` y devuelve el `confirmationId` cuando aplique. Una solicitud como `"Agéndame una tarea de dos horas"` busca un bloque libre dentro de los próximos siete días. Si indicas el día, la hora de inicio y una duración para una reunión, LAX calcula la hora de finalización sin pedir confirmación de ese dato.
+
+>>>>>>> master
 También entiende compromisos recurrentes semanales, por ejemplo: `"Bloquea estudio todos los lunes a las 3 pm por dos horas"`. Si no se especifica una fecha final, la serie continúa indefinidamente en Google Calendar. Antes de crearla, LAX revisa conflictos en las próximas 52 ocurrencias y no reubica eventos para hacerle espacio.
 
 Cuando una respuesta pida confirmación, conserva el `confirmationId` y envíalo junto con la respuesta:

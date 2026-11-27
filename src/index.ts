@@ -105,7 +105,19 @@ app.post(
             confirmationId:
                 typeof confirmationId === "string" ? confirmationId : undefined
         });
+<<<<<<< HEAD
         return reply.code(200).send(result);
+=======
+        let statusCode = 200;
+        if (!Array.isArray(result)) {
+            const requiresConfirmation =
+                result.status === "conflict" ||
+                ("confirmationRequired" in result &&
+                    result.confirmationRequired === true);
+            if (requiresConfirmation) statusCode = 409;
+        }
+        return reply.code(statusCode).send(result);
+>>>>>>> master
     } catch (error) {
         request.log.error(
             { errorType: error instanceof Error ? error.name : "UnknownError" },
